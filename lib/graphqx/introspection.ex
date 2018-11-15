@@ -7,7 +7,7 @@ defmodule Graphqx.Introspection do
   Get a list of object types defined in your schema.
   """
   def objects do
-    %{"types" => data} = Graphql.Query.introspect!("types { name, kind }")
+    %{"types" => data} = Graphqx.Query.introspect!("types { name, kind }")
 
     Enum.reduce(data, [], fn
       %{"kind" => "OBJECT", "name" => <<"__"::binary, _::binary>>}, acc ->
