@@ -14,10 +14,6 @@ defmodule Graphqx.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: {Graphqx, []},
-      start_phases: [
-        {:load_graphql_schema, []}
-      ],
       extra_applications: [
         :logger,
         :graphql

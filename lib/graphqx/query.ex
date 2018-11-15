@@ -1,22 +1,22 @@
 defmodule Graphqx.Query do
   require Logger
 
-  def run!(document, options \\ []) do
+  def run!(statement, options \\ []) do
     operation_name = Keyword.get(options, :op_name) || :undefined
     vars = Keyword.get(options, :vars) || %{}
 
-    {:ok, fun_env, ast} = prepare_statement(document)
+    {:ok, fun_env, ast} = prepare_statement(statement)
     params = :graphql.type_check_params(fun_env, operation_name, vars)
     context = %{params: params, operation_name: operation_name}
     :graphql.execute(context, ast)
   end
 
-  def run(document, options \\ []) do
+  def run(statement, options \\ []) do
     operation_name = Keyword.get(options, :op_name) || :undefined
     vars = Keyword.get(options, :vars) || %{}
 
     try do
-      case prepare_statement(document) do
+      case prepare_statement(statement) do
         {:ok, fun_env, ast} ->
           params = :graphql.type_check_params(fun_env, operation_name, vars)
           context = %{params: params, operation_name: operation_name}
@@ -41,10 +41,9 @@ defmodule Graphqx.Query do
     data
   end
 
-  defp prepare_statement(document) do
-    with {:ok, ast} <- :graphql.parse(document),
-         elaborated <- :graphql.elaborate(ast),
-         {:ok, %{fun_env: fun_env, ast: ast}} <- :graphql.type_check(elaborated),
+  defp prepare_statement(statement) do
+    with {:ok, ast} <- :graphql.parse(statement),
+         {:ok, %{fun_env: fun_env, ast: ast}} <- :graphql.type_check(ast),
          :ok <- :graphql.validate(ast) do
       {:ok, fun_env, ast}
     else
@@ -61,3 +60,4 @@ defmodule Graphqx.Query do
     end
   end
 end
+

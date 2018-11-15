@@ -1,0 +1,25 @@
+interface Node {
+  id : ID!
+}
+
+type Monster implements Node {
+  id : ID!
+  name : String!
+}
+
+# type Mutation {
+#   introduceRoom(input: IntroduceRoomInput!) : IntroduceRoomPayload
+#   introduceMonster(input: IntroduceMonsterInput!) : IntroduceMonsterPayload
+#   introduceItem(input: IntroduceItemInput!) : IntroduceItemPayload
+#   spawnMinion(input: SpawnMinionInput!) : SpawnMinionPayload
+# }
+
+type Query {
+  monster(id: ID!) : Monster
+}
+
+schema {
+  query : Query
+  # mutation : Mutation
+}
+
