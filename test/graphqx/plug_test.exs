@@ -20,7 +20,7 @@ defmodule Graphqx.PlugTest do
       variables: %{"slug" => "bounty-hunter-digital-camo-stool"}
     }
 
-    res = conn(:post, "/", request) |> Graphql.Plug.call(%{})
+    res = conn(:post, "/", request) |> Graphqx.Plug.call(%{})
     assert res.status == 200
     assert {:ok, _json} = Poison.decode(res.resp_body)
   end
@@ -38,7 +38,7 @@ defmodule Graphqx.PlugTest do
       variables: %{"slug" => "bounty-hunter-digital-camo-stool"}
     }
 
-    res = conn(:post, "/", request) |> Graphql.Plug.call(%{})
+    res = conn(:post, "/", request) |> Graphqx.Plug.call(%{})
     assert res.status == 400
 
     assert %{
@@ -62,7 +62,7 @@ defmodule Graphqx.PlugTest do
       variables: %{"thug" => "life"}
     }
 
-    res = conn(:post, "/", request) |> Graphql.Plug.call(%{})
+    res = conn(:post, "/", request) |> Graphqx.Plug.call(%{})
     assert res.status == 400
 
     assert %{
@@ -90,7 +90,7 @@ defmodule Graphqx.PlugTest do
       }
     }
 
-    res = conn(:post, "/", request) |> Graphql.Plug.call(%{})
+    res = conn(:post, "/", request) |> Graphqx.Plug.call(%{})
     assert res.status == 400
 
     assert %{
