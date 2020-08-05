@@ -8,19 +8,14 @@ defmodule Graphqx.PlugTest do
       query: """
          query Test($slug : ID!) {
            post(slug: $slug) {
-             ... on Post { published }
-             ... on Body {
-               id
-               parent_id
-               role
-             }
+             role
            }
          }
       """,
       variables: %{"slug" => "bounty-hunter-digital-camo-stool"}
     }
 
-    res = conn(:post, "/", request) |> Graphql.Plug.call(%{})
+    res = conn(:post, "/", request) |> Graphqx.Plug.call(%{})
     assert res.status == 200
     assert {:ok, _json} = Poison.decode(res.resp_body)
   end
@@ -38,7 +33,7 @@ defmodule Graphqx.PlugTest do
       variables: %{"slug" => "bounty-hunter-digital-camo-stool"}
     }
 
-    res = conn(:post, "/", request) |> Graphql.Plug.call(%{})
+    res = conn(:post, "/", request) |> Graphqx.Plug.call(%{})
     assert res.status == 400
 
     assert %{
@@ -62,13 +57,13 @@ defmodule Graphqx.PlugTest do
       variables: %{"thug" => "life"}
     }
 
-    res = conn(:post, "/", request) |> Graphql.Plug.call(%{})
+    res = conn(:post, "/", request) |> Graphqx.Plug.call(%{})
     assert res.status == 400
 
     assert %{
              "error" => %{
-               "key" => "missing_non_null_param",
-               "message" => "The parameter is non-null, but was undefined in parameter list",
+               "error_term" => "missing_non_null_param",
+               "phase" => "type_check",
                "path" => ["Test", "slug"]
              }
            } = Poison.decode!(res.resp_body)
@@ -90,14 +85,14 @@ defmodule Graphqx.PlugTest do
       }
     }
 
-    res = conn(:post, "/", request) |> Graphql.Plug.call(%{})
+    res = conn(:post, "/", request) |> Graphqx.Plug.call(%{})
     assert res.status == 400
 
     assert %{
              "error" => %{
-               "key" => "unknown_field",
-               "message" => "The query refers to a field which is not known",
-               "path" => ["document", "ArticleQuery", "post", "...", "unknown_field_on_post"]
+               "error_term" => "unknown_field",
+               "phase" => "type_check",
+               "path" => ["ArticleQuery", "post", "...", "unknown_field_on_post"]
              }
            } = Poison.decode!(res.resp_body)
   end

@@ -7,6 +7,11 @@ type Monster implements Node {
   name : String!
 }
 
+type Post {
+  slug : ID!
+  role : String!
+}
+
 # type Mutation {
 #   introduceRoom(input: IntroduceRoomInput!) : IntroduceRoomPayload
 #   introduceMonster(input: IntroduceMonsterInput!) : IntroduceMonsterPayload
@@ -16,6 +21,7 @@ type Monster implements Node {
 
 type Query {
   monster(id: ID!) : Monster
+  post(slug: ID!) : Post
 }
 
 schema {
