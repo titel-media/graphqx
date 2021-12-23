@@ -1,5 +1,5 @@
 defmodule GraphqxTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest Graphqx
 
   test "foo" do
@@ -11,7 +11,7 @@ defmodule GraphqxTest do
       }
     }
     """
-    IO.inspect Graphqx.Query.run(query)
+    IO.inspect Graphqx.Query.run(query, op_name: nil, vars: nil)
   end
 
 end
