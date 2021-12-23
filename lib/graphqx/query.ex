@@ -60,4 +60,3 @@ defmodule Graphqx.Query do
     end
   end
 end
-

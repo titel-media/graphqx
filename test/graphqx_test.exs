@@ -11,8 +11,17 @@ defmodule GraphqxTest do
       }
     }
     """
-    IO.inspect Graphqx.Query.run(query, op_name: nil, vars: nil)
+
+    {:ok,
+     %{
+       data: %{"monster" => :null},
+       errors: [
+         %{
+           key: :resolver_error,
+           message: "<<\"unknown query: monster\">>",
+           path: ["ROOT", "monster"]
+         }
+       ]
+     }} = Graphqx.Query.run(query)
   end
-
 end
-

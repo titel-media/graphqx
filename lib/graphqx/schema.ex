@@ -7,8 +7,8 @@ defmodule Graphqx.Schema do
   @default_resolver %{default: Graphqx.ObjectResolver}
   @default_object_resolvers %{
     default: Graphqx.ObjectResolver,
-    "Query": Graphqx.QueryResolver,
-    "Mutation": Graphqx.MutationResolver
+    Query: Graphqx.QueryResolver,
+    Mutation: Graphqx.MutationResolver
   }
 
   defmacro __using__(opts) do
@@ -19,7 +19,8 @@ defmodule Graphqx.Schema do
       def load() do
         with config when not is_nil(config) <- Application.get_env(@otp_app, __MODULE__),
              {:ok, filename} <- Keyword.fetch(config, :filename),
-             mapping <- Keyword.get(config, :mapping, %{}) |> Graphqx.Schema.merge_default_mappings(),
+             mapping <-
+               Keyword.get(config, :mapping, %{}) |> Graphqx.Schema.merge_default_mappings(),
              path <- Path.join(:code.priv_dir(@otp_app), filename),
              {:ok, schema} <- File.read(path),
              :ok <- Graphqx.Schema.load(schema, mapping) do
