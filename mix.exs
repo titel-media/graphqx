@@ -27,10 +27,8 @@ defmodule Graphqx.MixProject do
       # plug is our web layer
       {:plug, "~> 1.6"},
       # this is the erlang graphql library providing query parsing and object resolvers
-      {:graphql, git: "https://github.com/titel-media/graphql-erlang.git", branch: "develop"},
-      # use custom Poison JSON en/decoder, hence the override: true
-      {:poison,
-       git: "https://github.com/titel-media/poison.git", branch: "master", override: true},
+      {:graphql, git: "https://github.com/jlouis/graphql-erlang.git", ref: "4fd356294c2acea42a024366bc5a64661e4862d7"},
+      {:poison, "~> 5.0"},
       # ex_doc is generating documentation for us
       {:ex_doc, "~> 0.19", only: :dev, runtime: false}
     ]

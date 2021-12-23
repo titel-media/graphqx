@@ -97,7 +97,7 @@ defmodule Graphqx.PlugTest do
              "error" => %{
                "error_term" => "unknown_field",
                "phase" => "type_check",
-               "path" => ["document", "ArticleQuery", "post", "...", "unknown_field_on_post"]
+               "path" => ["ArticleQuery", "post", "...", "unknown_field_on_post"]
              }
            } = Poison.decode!(res.resp_body)
   end

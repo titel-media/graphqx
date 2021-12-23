@@ -12,16 +12,16 @@ defmodule GraphqxTest do
     }
     """
 
-    {:ok,
+    assert {:ok,
      %{
        data: %{"monster" => :null},
        errors: [
          %{
-           key: :resolver_error,
+           extensions: %{code: :resolver_error},
            message: "<<\"unknown query: monster\">>",
-           path: ["ROOT", "monster"]
+           path: ["monster"]
          }
        ]
-     }} = Graphqx.Query.run(query)
+     }} == Graphqx.Query.run(query)
   end
 end
